@@ -4,7 +4,7 @@ public class Filme {
     private String descricao;
     private String genero;
     private int duracao;
-    private boolean filme3D;  // Novo atributo
+    private boolean filme3D; 
 
     public Filme(String nome, String diretor, String descricao, String genero, int duracao, boolean filme3D) {
         this.nome = nome;
