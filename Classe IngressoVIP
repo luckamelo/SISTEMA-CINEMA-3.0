@@ -1,0 +1,10 @@
+public class IngressoVIP extends Ingresso {
+    public IngressoVIP(Filme filme, String tipoIngresso, String horarioSessao) {
+        super(filme, tipoIngresso, horarioSessao);
+    }
+
+    @Override
+    public void acessoLanchonete() {
+        System.out.println("Lanchonete do cinema liberada");
+    }
+}
