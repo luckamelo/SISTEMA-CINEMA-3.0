@@ -1,0 +1,20 @@
+public class Ingresso {
+    private Filme filme;
+    private String tipoIngresso;
+    private String horarioSessao;
+
+    public Ingresso(Filme filme, String tipoIngresso, String horarioSessao) {
+        this.filme = filme;
+        this.tipoIngresso = tipoIngresso;
+        this.horarioSessao = horarioSessao;
+    }
+
+    public void acessoLanchonete() {
+        System.out.println("Compre um ingresso VIP");
+    }
+
+    @Override
+    public String toString() {
+        return "Filme: " + filme.getNome() + "\nTipo de Ingresso: " + tipoIngresso + "\nHorário: " + horarioSessao;
+    }
+}
