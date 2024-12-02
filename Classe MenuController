@@ -15,9 +15,9 @@ public class MenuController {
         this.precoMeia = 12.0;
         this.scanner = new Scanner(System.in);
 
-        // Filmes com o atributo filme3D
+        
         filmes.add(new Filme("Venom", "Ruben Fleischer", "Filme de ação com Venom", "Ação", 112, false));
-        filmes.add(new Filme("Avatar", "James Cameron", "Filme de ficção científica em 3D", "Ficção", 162, true));
+        filmes.add(new Filme("American Pie", "Paul Weitz", "Comédia sobre amigos na adolescência", "Comédia", 96, false));
         filmes.add(new Filme("Cidade de Deus", "Fernando Meirelles", "Filme dramático sobre a violência no Rio", "Drama", 130, false));
         filmes.add(new Filme("Náufrago", "Robert Zemeckis", "Filme de sobrevivência", "Aventura", 143, false));
         filmes.add(new Filme("Maníaco do Parque", "Paulo Santiago", "Suspense baseado em história real", "Suspense", 105, false));
@@ -63,7 +63,7 @@ public class MenuController {
 
         String horarioSessao = sessoes.get(opcaoSessao - 1);
 
-        scanner.nextLine(); // Limpa o buffer
+        scanner.nextLine(); 
 
         System.out.print("\nDigite o tipo de ingresso (Inteiro ou Meia): ");
         String tipoIngresso = scanner.nextLine().trim();
@@ -100,7 +100,7 @@ public class MenuController {
     private double calcularTotal(int quantidadeInteiro, int quantidadeMeia, String tipoIngresso) {
         double precoIngresso = precoInteiro;
         if ("VIP".equalsIgnoreCase(tipoIngresso)) {
-            precoIngresso = 48.0; // Preço do ingresso VIP
+            precoIngresso = 48.0;
         }
         return (quantidadeInteiro * precoIngresso) + (quantidadeMeia * precoMeia);
     }
