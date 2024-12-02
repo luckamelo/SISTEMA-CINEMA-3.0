@@ -1,0 +1,123 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MenuController {
+    private ArrayList<Filme> filmes;
+    private ArrayList<String> sessoes;
+    private double precoInteiro;
+    private double precoMeia;
+    private Scanner scanner;
+
+    public MenuController() {
+        this.filmes = new ArrayList<>();
+        this.sessoes = new ArrayList<>();
+        this.precoInteiro = 24.0;
+        this.precoMeia = 12.0;
+        this.scanner = new Scanner(System.in);
+
+        // Filmes com o atributo filme3D
+        filmes.add(new Filme("Venom", "Ruben Fleischer", "Filme de ação com Venom", "Ação", 112, false));
+        filmes.add(new Filme("Avatar", "James Cameron", "Filme de ficção científica em 3D", "Ficção", 162, true));
+        filmes.add(new Filme("Cidade de Deus", "Fernando Meirelles", "Filme dramático sobre a violência no Rio", "Drama", 130, false));
+        filmes.add(new Filme("Náufrago", "Robert Zemeckis", "Filme de sobrevivência", "Aventura", 143, false));
+        filmes.add(new Filme("Maníaco do Parque", "Paulo Santiago", "Suspense baseado em história real", "Suspense", 105, false));
+
+        sessoes.add("14:00");
+        sessoes.add("16:30");
+        sessoes.add("19:00");
+        sessoes.add("21:30");
+    }
+
+    public void exibirFilmes() {
+        System.out.println("Selecione um filme:");
+        for (int i = 0; i < filmes.size(); i++) {
+            System.out.println((i + 1) + ". " + filmes.get(i).getNome() + (filmes.get(i).isFilme3D() ? " - 3D" : ""));
+        }
+    }
+
+    public void exibirSessoes() {
+        System.out.println("\nSelecione a sessão do filme:");
+        for (int i = 0; i < sessoes.size(); i++) {
+            System.out.println((i + 1) + ". " + sessoes.get(i));
+        }
+    }
+
+    public void comprarIngresso() {
+        exibirFilmes();
+
+        int opcaoFilme;
+        do {
+            System.out.print("\nDigite o número do filme desejado (1-5): ");
+            opcaoFilme = scanner.nextInt();
+        } while (opcaoFilme < 1 || opcaoFilme > 5);
+
+        Filme filmeEscolhido = filmes.get(opcaoFilme - 1);
+
+        exibirSessoes();
+
+        int opcaoSessao;
+        do {
+            System.out.print("\nDigite o número da sessão desejada (1-4): ");
+            opcaoSessao = scanner.nextInt();
+        } while (opcaoSessao < 1 || opcaoSessao > 4);
+
+        String horarioSessao = sessoes.get(opcaoSessao - 1);
+
+        scanner.nextLine(); // Limpa o buffer
+
+        System.out.print("\nDigite o tipo de ingresso (Inteiro ou Meia): ");
+        String tipoIngresso = scanner.nextLine().trim();
+
+        if ("VIP".equalsIgnoreCase(tipoIngresso) && !filmeEscolhido.isFilme3D()) {
+            System.out.println("Ingressos VIP só podem ser associados a filmes 3D!");
+            return;
+        }
+
+        System.out.print("\nDigite a quantidade de ingressos inteiros: ");
+        int quantidadeInteiro = scanner.nextInt();
+
+        System.out.print("Digite a quantidade de ingressos meia-entrada: ");
+        int quantidadeMeia = scanner.nextInt();
+
+        double total = calcularTotal(quantidadeInteiro, quantidadeMeia, tipoIngresso);
+
+        Ingresso ingresso;
+        if ("VIP".equalsIgnoreCase(tipoIngresso)) {
+            ingresso = new IngressoVIP(filmeEscolhido, tipoIngresso, horarioSessao);
+        } else {
+            ingresso = new Ingresso(filmeEscolhido, tipoIngresso, horarioSessao);
+        }
+
+        ingresso.acessoLanchonete();
+
+        System.out.println("\nResumo da compra:");
+        System.out.println(ingresso);
+        System.out.println("Ingressos Inteiros: " + quantidadeInteiro);
+        System.out.println("Ingressos Meia-Entrada: " + quantidadeMeia);
+        System.out.println("Total a Pagar: R$ " + total);
+    }
+
+    private double calcularTotal(int quantidadeInteiro, int quantidadeMeia, String tipoIngresso) {
+        double precoIngresso = precoInteiro;
+        if ("VIP".equalsIgnoreCase(tipoIngresso)) {
+            precoIngresso = 48.0; // Preço do ingresso VIP
+        }
+        return (quantidadeInteiro * precoIngresso) + (quantidadeMeia * precoMeia);
+    }
+
+    public void executar() {
+        boolean continuarComprando = true;
+
+        while (continuarComprando) {
+            comprarIngresso();
+
+            System.out.print("\nDeseja realizar outra compra? (sim/não): ");
+            String resposta = scanner.next();
+            if (resposta.equalsIgnoreCase("não")) {
+                continuarComprando = false;
+            }
+        }
+
+        System.out.println("\nObrigado por usar nosso sistema de vendas de ingressos!");
+    }
+}
